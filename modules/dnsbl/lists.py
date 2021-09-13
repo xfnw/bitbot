@@ -55,12 +55,16 @@ class TorExitDan(DNSBL):
     def process(self, a_record, txt_record):
         return "tor exit"
 
+class BellzBL(DNSBL):
+    hostname = "dnsbl.owen.bellz.org"
+
 DEFAULT_LISTS = [
     ZenSpamhaus(),
     EFNetRBL(),
     DroneBL(),
     AbuseAtCBL(),
-    TorExitDan()
+    TorExitDan(),
+    BellzBL()
 ]
 
 def default_lists():
