@@ -2,8 +2,8 @@ import collections, datetime, sys, textwrap, time, typing
 from src import EventManager, IRCBot, IRCChannel, IRCChannels, IRCLine
 from src import IRCObject, IRCSocket, IRCUser, utils
 
-READ_TIMEOUT_SECONDS = 120
-PING_INTERVAL_SECONDS = 30
+READ_TIMEOUT_SECONDS = 300
+PING_INTERVAL_SECONDS = 60
 
 class Server(IRCObject.Object):
     def __init__(self,

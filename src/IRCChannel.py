@@ -119,23 +119,26 @@ class Channel(IRCObject.Object):
             remove = chunk[0] == "-"
             for mode in chunk[1:]:
                 new_arg = None
-                if mode in self.server.channel_list_modes:
-                    new_arg = args.pop(0)
-                elif (mode in self.server.channel_parametered_modes or
-                        mode in self.server.prefix_modes):
-                    new_arg = args.pop(0)
-                    self.change_mode(remove, mode, new_arg)
-                elif mode in self.server.channel_setting_modes:
-                    if remove:
-                        self.change_mode(remove, mode)
-                    else:
+                try:
+                    if mode in self.server.channel_list_modes:
+                        new_arg = args.pop(0)
+                    elif (mode in self.server.channel_parametered_modes or
+                            mode in self.server.prefix_modes):
                         new_arg = args.pop(0)
                         self.change_mode(remove, mode, new_arg)
-                elif mode in self.server.channel_modes:
-                    self.change_mode(remove, mode)
+                    elif mode in self.server.channel_setting_modes:
+                        if remove:
+                            self.change_mode(remove, mode)
+                        else:
+                            new_arg = args.pop(0)
+                            self.change_mode(remove, mode, new_arg)
+                    elif mode in self.server.channel_modes:
+                        self.change_mode(remove, mode)
 
-                mode_str = "%s%s" % ("-" if remove else "+", mode)
-                new_modes.append((mode_str, new_arg))
+                    mode_str = "%s%s" % ("-" if remove else "+", mode)
+                    new_modes.append((mode_str, new_arg))
+                except:
+                    print('ngircd did a bad')
         return new_modes
 
     def _setting_cache_key(self, key: str) -> str:
