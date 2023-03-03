@@ -80,7 +80,11 @@ def join(events, event):
     if is_self:
         channel = event["server"].channels.add(channel_name)
     else:
-        channel = event["server"].channels.get(channel_name)
+        try:
+            channel = event["server"].channels.get(channel_name)
+        except:
+            print(f"wee woo join state crime: {channel_name} from {event['line'].source.nickname}")
+            return
 
 
     channel.add_user(user)
