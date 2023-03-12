@@ -51,7 +51,10 @@ class Channels(object):
         del self._channels[lower]
 
     def get(self, name: str):
-        return self._channels[self._name_lower(name)]
+        lower = self._name_lower(name)
+        if lower not in self._channels:
+            self.add(name)
+        return self._channels[lower]
 
     def rename(self, old_name, new_name):
         old_lower = self._name_lower(old_name)
